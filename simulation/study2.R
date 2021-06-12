@@ -6,10 +6,10 @@ library(doSNOW)
 fp <- "~/Box Sync/Behaviormetrika_Special_Issue/Article_2_PassageCAT/Results/Study2"
 
 # check package versions
-if (packageVersion("TestDesign") != "1.2.2") {
+if (packageVersion("TestDesign") != "1.2.4") {
   .rs.restartR()
 }
-if (packageVersion("gurobi") != "9.1.1") {
+if (packageVersion("gurobi") != "9.1.2") {
   .rs.restartR()
 }
 
@@ -47,7 +47,7 @@ cfg_base <- createShadowTestConfig(
 conditions <- expand.grid(
   weave = c("ds", "sd", "interspersed", "setbased"),
   exposure_control = c("none", "bigm"),
-  info_type = c("maxinfo", "goalinfo8", "goalinfo6"),
+  info_type = c("maxinfo", "goalinfo8", "goalinfo7", "goalinfo6"),
   stringsAsFactors = FALSE
 )
 n_conditions <- dim(conditions)[1]
@@ -104,6 +104,10 @@ o <- foreach(
   if (condition$info_type == "goalinfo8") {
     cfg@item_selection$method       <- "GFI"
     cfg@item_selection$target_value <- 8
+  }
+  if (condition$info_type == "goalinfo7") {
+    cfg@item_selection$method       <- "GFI"
+    cfg@item_selection$target_value <- 7
   }
   if (condition$info_type == "goalinfo6") {
     cfg@item_selection$method       <- "GFI"
