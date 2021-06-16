@@ -53,9 +53,9 @@ conditions <- expand.grid(
 n_conditions <- dim(conditions)[1]
 
 # ! Change replication range here
-#  1:50  Sangdon
-# 51:100 Choi
-idx_replications <- 1:50
+#  1:20  Sangdon
+# 21:100 Choi
+idx_replications <- 1:20
 
 tasks <-
   expand.grid(
