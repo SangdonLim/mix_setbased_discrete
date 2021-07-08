@@ -32,9 +32,6 @@ constraints_setbased <- loadConstraints(
 
 cfg_base <- createShadowTestConfig(
   MIP = list(solver = "gurobi"),
-  refresh_policy = list(
-    method = "SET"
-  ),
   exposure_control = list(
     method = "BIGM",
     M = 100,
@@ -48,14 +45,23 @@ conditions <- expand.grid(
   weave = c("ds", "sd", "interspersed", "setbased"),
   exposure_control = c("none", "bigm"),
   info_type = c("maxinfo", "goalinfo8", "goalinfo7", "goalinfo6"),
+  refresh = c("setlevel", "always"),
   stringsAsFactors = FALSE
 )
+conditions_1 <- subset(conditions, refresh == "setlevel")
+conditions_2 <- subset(
+  conditions,
+  weave %in% c("setbased", "ds") &
+  info_type == "maxinfo" &
+  refresh == "always"
+)
+conditions <- rbind(conditions_1, conditions_2)
 n_conditions <- dim(conditions)[1]
 
 # ! Change replication range here
-#  1:20  Sangdon
-# 21:100 Choi
-idx_replications <- 1:20
+#  1:30  Sangdon
+# 31:100 Choi
+idx_replications <- 1:30
 
 tasks <-
   expand.grid(
@@ -113,12 +119,19 @@ o <- foreach(
     cfg@item_selection$method       <- "GFI"
     cfg@item_selection$target_value <- 6
   }
+  if (condition$refresh == "setlevel") {
+    cfg@refresh_policy$method <- "SET"
+  }
+  if (condition$refresh == "always") {
+    cfg@refresh_policy$method <- "ALWAYS"
+  }
 
   fn <- sprintf(
-    "solution_conditional_%s_%s_%s_%s.Rdata",
+    "solution_conditional_%s_%s_%s_%s_%s.Rdata",
     condition$weave,
     condition$exposure_control,
     condition$info_type,
+    condition$refresh,
     idx_replication
   )
 
