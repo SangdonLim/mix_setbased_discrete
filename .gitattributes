@@ -1,2 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+*/*.eps linguist-vendored
+*/*.R linguist-language=R
+
