@@ -3,6 +3,8 @@ library(progress)
 library(TestDesign)
 
 fp <- "~/Box Sync/Behaviormetrika_Special_Issue/Article_2_PassageCAT/Results"
+# needs to be replaced with the path of your own simulation results folder
+# run the simulation first using: simulation/study1.R
 
 fs <- list.files(file.path(fp, "Study1"))
 o <- as.data.frame(matrix(NA, length(fs), 4))

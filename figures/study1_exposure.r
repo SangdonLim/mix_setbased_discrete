@@ -1,6 +1,10 @@
 library(TestDesign)
 
 fp <- "~/Box Sync/Behaviormetrika_Special_Issue/Article_2_PassageCAT/Results"
+# needs to be replaced with the path of your own simulation results folder
+# run the simulation first using: simulation/study1.R
+
+# requires TestDesign 1.2.6 for plotting exposure rate panels
 
 setEPS()
 postscript("figures/study1_exposure.eps", width = 8, height = 8)
